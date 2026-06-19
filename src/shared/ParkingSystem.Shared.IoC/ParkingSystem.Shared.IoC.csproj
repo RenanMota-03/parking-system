@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ParkingSystem.Shared.Core\ParkingSystem.Shared.Core.csproj" />
+    <ProjectReference Include="..\..\modules\parking\ParkingSystem.Module.Parking.Application\ParkingSystem.Module.Parking.Application.csproj" />
+    <ProjectReference Include="..\..\modules\parking\ParkingSystem.Module.Parking.Infra.Data.EF\ParkingSystem.Module.Parking.Infra.Data.EF.csproj" />
+    <ProjectReference Include="..\..\modules\identity\ParkingSystem.Module.Identity.Application\ParkingSystem.Module.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\modules\identity\ParkingSystem.Module.Identity.Infra.Data.EF\ParkingSystem.Module.Identity.Infra.Data.EF.csproj" />
+  </ItemGroup>
+
+</Project>

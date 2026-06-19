@@ -1,0 +1,123 @@
+/* ─── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background-color: var(--color-surface);
+  color: var(--p-surface-900);
+}
+
+/* ─── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Brand */
+  --color-primary:        #003c90;
+  --color-primary-light:  #0f52ba;
+  --color-primary-hover:  #003080;
+
+  /* Surfaces */
+  --color-surface:            #faf8ff;
+  --color-surface-container:  #e9edff;
+  --color-surface-card:       #ffffff;
+  --color-inverse-surface:    #2a303f;
+
+  /* Status */
+  --color-available:    #10B981;
+  --color-occupied:     #EF4444;
+  --color-reserved:     #F59E0B;
+  --color-maintenance:  #64748B;
+
+  /* Typography scale */
+  --font-display:  2.25rem;   /* 36px */
+  --font-headline: 1.5rem;    /* 24px */
+  --font-title:    1.25rem;   /* 20px */
+  --font-body:     1rem;      /* 16px */
+  --font-sm:       0.875rem;  /* 14px */
+  --font-xs:       0.75rem;   /* 12px */
+  --font-numeric:  3rem;      /* 48px KPIs */
+
+  /* Spacing (4px grid) */
+  --space-xs:  0.25rem;   /* 4px */
+  --space-sm:  0.5rem;    /* 8px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  1.5rem;    /* 24px */
+  --space-xl:  2rem;      /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-card:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-modal: 0 10px 25px rgba(0,0,0,0.15);
+
+  /* Layout */
+  --sidebar-collapsed: 72px;
+  --sidebar-expanded:  256px;
+  --topnav-height:     64px;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: var(--radius-full); }
+
+/* ─── PrimeVue overrides globais ────────────────────────────────── */
+.p-button-primary {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+.p-button-primary:hover {
+  background: var(--color-primary-light) !important;
+  border-color: var(--color-primary-light) !important;
+}
+
+.p-card {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--color-surface-container) !important;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: var(--color-surface-container) !important;
+}
+
+/* ─── Utility classes ───────────────────────────────────────────── */
+.font-numeric { font-size: var(--font-numeric); font-weight: 700; line-height: 1; }
+.text-available   { color: var(--color-available); }
+.text-occupied    { color: var(--color-occupied); }
+.text-reserved    { color: var(--color-reserved); }
+.text-maintenance { color: var(--color-maintenance); }
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Pulse animation (vagas reservadas) ────────────────────────── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+.pulse-reserved { animation: pulse-ring 2s infinite; }

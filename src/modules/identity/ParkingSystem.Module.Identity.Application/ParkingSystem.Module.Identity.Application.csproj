@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ParkingSystem.WebApi.Bff.WebApp" />
+    <InternalsVisibleTo Include="ParkingSystem.Shared.IoC" />
+    <InternalsVisibleTo Include="ParkingSystem.Tests.UnitTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ParkingSystem.Module.Identity.Domain\ParkingSystem.Module.Identity.Domain.csproj" />
+    <ProjectReference Include="..\ParkingSystem.Module.Identity.Infra.Data.EF\ParkingSystem.Module.Identity.Infra.Data.EF.csproj" />
+  </ItemGroup>
+
+</Project>

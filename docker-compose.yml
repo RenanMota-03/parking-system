@@ -1,0 +1,15 @@
+services:
+  parking-db:
+    image: bitnami/postgresql:latest
+    container_name: parking_postgres_container
+    environment:
+      POSTGRESQL_USERNAME: parking_admin
+      POSTGRESQL_PASSWORD: SecretPassword123!
+      POSTGRESQL_DATABASE: parking_system_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_parking_data:/bitnami/postgresql
+
+volumes:
+  postgres_parking_data:

@@ -1,0 +1,50 @@
+# Build outputs
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+.idea/
+*.DotSettings.user
+
+# Secrets — never commit development credentials
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Publish output
+publish/
+*.pubxml
+*.pubxml.user
+
+# Node / WebUI
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes / data
+postgres-data/
+
+# Test results
+TestResults/
+coverage/
+*.trx
+*.coveragexml

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\services\webapi\ParkingSystem.WebApi.Bff.WebApp\ParkingSystem.WebApi.Bff.WebApp.csproj" />
+    <ProjectReference Include="..\..\src\modules\identity\ParkingSystem.Module.Identity.Infra.Data.EF\ParkingSystem.Module.Identity.Infra.Data.EF.csproj" />
+    <ProjectReference Include="..\..\src\modules\parking\ParkingSystem.Module.Parking.Infra.Data.EF\ParkingSystem.Module.Parking.Infra.Data.EF.csproj" />
+  </ItemGroup>
+
+</Project>

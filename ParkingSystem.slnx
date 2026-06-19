@@ -1,0 +1,35 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/modules/" />
+  <Folder Name="/src/modules/identity/">
+    <Project Path="src/modules/identity/ParkingSystem.Module.Identity.Application/ParkingSystem.Module.Identity.Application.csproj" />
+    <Project Path="src/modules/identity/ParkingSystem.Module.Identity.Domain/ParkingSystem.Module.Identity.Domain.csproj" />
+    <Project Path="src/modules/identity/ParkingSystem.Module.Identity.Infra.Data.EF/ParkingSystem.Module.Identity.Infra.Data.EF.csproj" />
+  </Folder>
+  <Folder Name="/src/modules/parking/">
+    <Project Path="src/modules/parking/ParkingSystem.Module.Parking.Domain/ParkingSystem.Module.Parking.Domain.csproj" />
+    <Project Path="src/modules/parking/ParkingSystem.Module.Parking.Application/ParkingSystem.Module.Parking.Application.csproj" />
+    <Project Path="src/modules/parking/ParkingSystem.Module.Parking.Infra.Data.EF/ParkingSystem.Module.Parking.Infra.Data.EF.csproj" />
+  </Folder>
+  <Folder Name="/src/services/" />
+  <Folder Name="/src/services/webapi/">
+    <Project Path="src/services/webapi/ParkingSystem.WebApi.Bff.WebApp/ParkingSystem.WebApi.Bff.WebApp.csproj" />
+  </Folder>
+  <Folder Name="/src/services/workers/" />
+  <Folder Name="/src/services/workers/DataSeedWorker/">
+    <Project Path="src/services/workers/DataSeedWorker/ParkingSystem.Workers.DataSeed.csproj" />
+  </Folder>
+  <Folder Name="/src/services/workers/MigrateWorker/">
+    <Project Path="src/services/workers/MigrateWorker/ParkingSystem.Workers.Migrate.csproj" />
+  </Folder>
+  <Folder Name="/src/services/workers/ReservaExpiracaoWorker/">
+    <Project Path="src/services/workers/ReservaExpiracaoWorker/ParkingSystem.Workers.ReservaExpiracao.csproj" />
+  </Folder>
+  <Folder Name="/src/shared/">
+    <Project Path="src/shared/ParkingSystem.Shared.Core/ParkingSystem.Shared.Core.csproj" />
+    <Project Path="src/shared/ParkingSystem.Shared.IoC/ParkingSystem.Shared.IoC.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ParkingSystem.Tests.UnitTests/ParkingSystem.Tests.UnitTests.csproj" />
+  </Folder>
+</Solution>
