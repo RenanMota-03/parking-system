@@ -11,6 +11,7 @@ public class VagaConfiguration : IEntityTypeConfiguration<Vaga>
         builder.ToTable("vagas");
         builder.HasKey(v => v.Id);
         builder.Property(v => v.Id).HasColumnName("id");
+        builder.Property(v => v.TenantId).HasColumnName("tenant_id").IsRequired();
         builder.Property(v => v.Numero).HasColumnName("numero").HasMaxLength(10).IsRequired();
         builder.Property(v => v.TipoVaga).HasColumnType("smallint").HasColumnName("tipo_vaga");
         builder.Property(v => v.Status).HasColumnType("smallint").HasColumnName("status");

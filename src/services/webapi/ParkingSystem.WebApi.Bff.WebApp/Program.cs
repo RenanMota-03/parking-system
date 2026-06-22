@@ -5,8 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using ParkingSystem.Module.Identity.Infra.Data.EF;
 using ParkingSystem.Module.Parking.Infra.Data.EF;
+using ParkingSystem.Shared.Core.Services;
 using ParkingSystem.Shared.IoC;
 using ParkingSystem.WebApi.Bff.WebApp.Endpoints;
+using ParkingSystem.WebApi.Bff.WebApp.Services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +46,9 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantProvider, HttpContextTenantProvider>();
 
 NativeInjectorBootStrapper.RegisterServices(builder.Services);
 
@@ -89,6 +94,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapAuthEndpoints();
+app.MapTenantEndpoints();
 app.MapVagaEndpoints();
 app.MapTarifaEndpoints();
 app.MapMovimentacaoEndpoints();

@@ -11,6 +11,7 @@ public class TarifaConfiguration : IEntityTypeConfiguration<Tarifa>
         builder.ToTable("tarifas");
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Id).HasColumnName("id");
+        builder.Property(t => t.TenantId).HasColumnName("tenant_id").IsRequired();
         builder.Property(t => t.TipoVaga).HasColumnType("smallint").HasColumnName("tipo_vaga");
         builder.Property(t => t.ValorHora).HasColumnType("numeric(18,2)").HasColumnName("valor_hora");
         builder.Property(t => t.ValorDiaria).HasColumnType("numeric(18,2)").HasColumnName("valor_diaria");

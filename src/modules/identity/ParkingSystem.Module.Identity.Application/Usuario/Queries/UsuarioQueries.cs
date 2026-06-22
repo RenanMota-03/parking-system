@@ -19,7 +19,7 @@ public class UsuarioQueries(IdentityDbContext context) : IUsuarioQueries
         var conn = context.Database.GetDbConnection();
 
         const string sql = """
-            SELECT id, nome, email, senha_hash, role
+            SELECT id, nome, email, senha_hash, role, tenant_id
             FROM usuarios
             WHERE email = @email AND is_deleted = false
             """;

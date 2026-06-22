@@ -7,7 +7,7 @@ namespace ParkingSystem.Tests.UnitTests.Parking;
 
 public class VagaTests
 {
-    private static Vaga CriarVaga() => new("A1", TipoVaga.Carro);
+    private static Vaga CriarVaga() => new(1L, "A1", TipoVaga.Carro);
 
     // ── Criação ───────────────────────────────────────────────────────────────
 
@@ -24,13 +24,13 @@ public class VagaTests
     [Fact]
     public void Criar_NumeroVazio_LancaExcecao()
     {
-        Assert.Throws<EntityValidationException>(() => new Vaga("", TipoVaga.Carro));
+        Assert.Throws<EntityValidationException>(() => new Vaga(1L, "", TipoVaga.Carro));
     }
 
     [Fact]
     public void Criar_NumeroMaiorQue10Chars_LancaExcecao()
     {
-        Assert.Throws<EntityValidationException>(() => new Vaga("12345678901", TipoVaga.Carro));
+        Assert.Throws<EntityValidationException>(() => new Vaga(1L, "12345678901", TipoVaga.Carro));
     }
 
     // ── Ocupar ────────────────────────────────────────────────────────────────

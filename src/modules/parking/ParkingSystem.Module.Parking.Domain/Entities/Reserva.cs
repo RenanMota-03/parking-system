@@ -4,8 +4,9 @@ using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Parking.Domain.Entities;
 
-public class Reserva : TrackableEntity, IAggregateRoot
+public class Reserva : TrackableEntity, IAggregateRoot, ITenantEntity
 {
+    public long TenantId { get; private set; }
     public long VagaId { get; private set; }
     public string UsuarioId { get; private set; } = string.Empty;
     public DateTime DataAgendada { get; private set; }
@@ -16,12 +17,13 @@ public class Reserva : TrackableEntity, IAggregateRoot
 
     protected Reserva() { }
 
-    public Reserva(long vagaId, string usuarioId, DateTime dataAgendada, DateTime dataLimite)
+    public Reserva(long tenantId, long vagaId, string usuarioId, DateTime dataAgendada, DateTime dataLimite)
     {
         DomainValidation.NotNullOrEmpty(usuarioId, nameof(UsuarioId));
         DomainValidation.That(dataLimite > dataAgendada, "DataLimite deve ser posterior à DataAgendada.");
         DomainValidation.That(dataAgendada > DateTime.UtcNow, "DataAgendada deve ser uma data futura.");
 
+        TenantId = tenantId;
         VagaId = vagaId;
         UsuarioId = usuarioId;
         DataAgendada = dataAgendada;

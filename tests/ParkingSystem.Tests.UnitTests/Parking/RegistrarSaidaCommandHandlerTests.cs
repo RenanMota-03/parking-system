@@ -54,7 +54,7 @@ public class RegistrarSaidaCommandHandlerTests
     [Fact]
     public async Task Handle_VagaNaoEncontrada_RetornaErro()
     {
-        var movimentacao = new Movimentacao(1, "ABC1234");
+        var movimentacao = new Movimentacao(1L, 1L, "ABC1234");
         _movRepo.GetAbertaByPlacaAsync("ABC1234", Arg.Any<CancellationToken>()).Returns(movimentacao);
         _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns((Vaga?)null);
         var command = new RegistrarSaidaCommand("ABC1234");
@@ -70,9 +70,9 @@ public class RegistrarSaidaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_SaidaRegistrada()
     {
-        var vaga = new Vaga("A1", TipoVaga.Carro);
+        var vaga = new Vaga(1L, "A1", TipoVaga.Carro);
         vaga.Ocupar();
-        var movimentacao = new Movimentacao(1, "ABC1234");
+        var movimentacao = new Movimentacao(1L, 1L, "ABC1234");
         _movRepo.GetAbertaByPlacaAsync("ABC1234", Arg.Any<CancellationToken>()).Returns(movimentacao);
         _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(vaga);
         _tarifaService.CalcularAsync(TipoVaga.Carro, Arg.Any<DateTime>(), Arg.Any<DateTime>(), Arg.Any<CancellationToken>())
@@ -90,9 +90,9 @@ public class RegistrarSaidaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_VagaLiberada()
     {
-        var vaga = new Vaga("A1", TipoVaga.Carro);
+        var vaga = new Vaga(1L, "A1", TipoVaga.Carro);
         vaga.Ocupar();
-        var movimentacao = new Movimentacao(1, "ABC1234");
+        var movimentacao = new Movimentacao(1L, 1L, "ABC1234");
         _movRepo.GetAbertaByPlacaAsync("ABC1234", Arg.Any<CancellationToken>()).Returns(movimentacao);
         _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(vaga);
         _tarifaService.CalcularAsync(Arg.Any<TipoVaga>(), Arg.Any<DateTime>(), Arg.Any<DateTime>(), Arg.Any<CancellationToken>())
@@ -107,9 +107,9 @@ public class RegistrarSaidaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_RetornaValorTotalEDataSaida()
     {
-        var vaga = new Vaga("A1", TipoVaga.Carro);
+        var vaga = new Vaga(1L, "A1", TipoVaga.Carro);
         vaga.Ocupar();
-        var movimentacao = new Movimentacao(1, "ABC1234");
+        var movimentacao = new Movimentacao(1L, 1L, "ABC1234");
         _movRepo.GetAbertaByPlacaAsync("ABC1234", Arg.Any<CancellationToken>()).Returns(movimentacao);
         _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(vaga);
         _tarifaService.CalcularAsync(Arg.Any<TipoVaga>(), Arg.Any<DateTime>(), Arg.Any<DateTime>(), Arg.Any<CancellationToken>())

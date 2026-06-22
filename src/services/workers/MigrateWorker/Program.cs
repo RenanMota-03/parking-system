@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ParkingSystem.Module.Identity.Infra.Data.EF;
 using ParkingSystem.Module.Parking.Infra.Data.EF;
+using ParkingSystem.Shared.Core.Services;
 
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
@@ -23,11 +24,13 @@ Console.WriteLine("Aplicando migrations...");
 
 try
 {
+    var systemProvider = new SystemTenantProvider();
+
     var identityOptions = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseNpgsql(connectionString)
         .Options;
 
-    await using (var identityCtx = new IdentityDbContext(identityOptions))
+    await using (var identityCtx = new IdentityDbContext(identityOptions, systemProvider))
     {
         Console.WriteLine("[Identity] Aplicando...");
         await identityCtx.Database.MigrateAsync();
@@ -38,7 +41,7 @@ try
         .UseNpgsql(connectionString)
         .Options;
 
-    await using (var parkingCtx = new ParkingDbContext(parkingOptions))
+    await using (var parkingCtx = new ParkingDbContext(parkingOptions, systemProvider))
     {
         Console.WriteLine("[Parking] Aplicando...");
         await parkingCtx.Database.MigrateAsync();

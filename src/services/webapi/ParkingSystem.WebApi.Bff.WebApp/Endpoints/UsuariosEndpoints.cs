@@ -34,11 +34,11 @@ public static class UsuariosEndpoints
 
     private static async Task<IResult> CriarAsync(
         [FromBody] CriarUsuarioRequest request,
-        [FromServices] ICommandHandler<RegistrarUsuarioCommand, ValidationResult> handler,
+        [FromServices] ICommandHandler<CriarUsuarioPorAdminCommand, ValidationResult> handler,
         CancellationToken ct = default)
     {
-        var command = new RegistrarUsuarioCommand(request.Nome, request.Email, request.Senha, request.Role);
-        var result  = await handler.Handle(command);
+        var command = new CriarUsuarioPorAdminCommand(request.Nome, request.Email, request.Senha, request.Role);
+        var result  = await handler.Handle(command, ct);
 
         if (!result.IsValid) return Results.UnprocessableEntity(result.Errors);
 

@@ -32,7 +32,7 @@ public class TarifaServiceTests
     [Fact]
     public async Task Calcular_Exatamente15Minutos_CobrarUmaHora()
     {
-        var tarifa = new Tarifa(TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
+        var tarifa = new Tarifa(1L, TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
         _repo.GetVigenteByTipoVagaAsync(TipoVaga.Carro, Arg.Any<CancellationToken>()).Returns(tarifa);
 
         var saida = Base.AddMinutes(15);
@@ -45,7 +45,7 @@ public class TarifaServiceTests
     [Fact]
     public async Task Calcular_1hora30minutos_CobrarDuasHoras()
     {
-        var tarifa = new Tarifa(TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
+        var tarifa = new Tarifa(1L, TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
         _repo.GetVigenteByTipoVagaAsync(TipoVaga.Carro, Arg.Any<CancellationToken>()).Returns(tarifa);
 
         var saida = Base.AddHours(1).AddMinutes(30);
@@ -58,7 +58,7 @@ public class TarifaServiceTests
     [Fact]
     public async Task Calcular_ValorCalculadoMaiorQueDiaria_RetornaValorDiaria()
     {
-        var tarifa = new Tarifa(TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
+        var tarifa = new Tarifa(1L, TipoVaga.Carro, valorHora: 10m, valorDiaria: 60m, valorMensal: 300m);
         _repo.GetVigenteByTipoVagaAsync(TipoVaga.Carro, Arg.Any<CancellationToken>()).Returns(tarifa);
 
         var saida = Base.AddHours(10);

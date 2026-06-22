@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using ParkingSystem.Module.Identity.Application.Tenant.Commands;
 using ParkingSystem.Module.Identity.Application.Usuario.Commands;
 using ParkingSystem.Module.Identity.Application.Usuario.Queries;
 using ParkingSystem.Module.Identity.Domain.Interfaces;
@@ -26,8 +27,11 @@ public static class NativeInjectorBootStrapper
     {
         // ── Identity repositories & queries ──────────────────────────────────
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<ITenantRepository, TenantRepository>();
         services.AddScoped<IUsuarioQueries, UsuarioQueries>();
         services.AddScoped<ICommandHandler<RegistrarUsuarioCommand, ValidationResult>, RegistrarUsuarioCommandHandler>();
+        services.AddScoped<ICommandHandler<CriarUsuarioPorAdminCommand, ValidationResult>, CriarUsuarioPorAdminCommandHandler>();
+        services.AddScoped<ICommandHandler<CriarTenantCommand, ValidationResult>, CriarTenantCommandHandler>();
 
         // ── Parking repositories ──────────────────────────────────────────────
         services.AddScoped<IVagaRepository, VagaRepository>();

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using ParkingSystem.Shared.Core.Services;
 
 namespace ParkingSystem.Module.Identity.Infra.Data.EF;
 
@@ -19,6 +20,6 @@ public class DesignTimeIdentityDbContextFactory : IDesignTimeDbContextFactory<Id
             .UseNpgsql(connectionString)
             .Options;
 
-        return new IdentityDbContext(options);
+        return new IdentityDbContext(options, new SystemTenantProvider());
     }
 }

@@ -15,6 +15,7 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.Property(u => u.Email).HasColumnName("email").HasMaxLength(150).IsRequired();
         builder.Property(u => u.SenhaHash).HasColumnName("senha_hash").IsRequired();
         builder.Property(u => u.Role).HasColumnType("smallint").HasColumnName("role");
+        builder.Property(u => u.TenantId).HasColumnName("tenant_id");
         builder.Property(u => u.IsDeleted).HasColumnName("is_deleted");
         builder.Property(u => u.CreatedAt).HasColumnName("created_at");
         builder.Property(u => u.UpdatedAt).HasColumnName("updated_at");

@@ -4,6 +4,7 @@ using ParkingSystem.Module.Parking.Domain.Entities;
 using ParkingSystem.Module.Parking.Domain.Enums;
 using ParkingSystem.Module.Parking.Domain.Interfaces;
 using ParkingSystem.Shared.Core.Data;
+using ParkingSystem.Shared.Core.Services;
 using Xunit;
 
 namespace ParkingSystem.Tests.UnitTests.Parking;
@@ -18,7 +19,7 @@ public class CadastrarVagaCommandHandlerTests
     {
         _repo.UnitOfWork.Returns(_uow);
         _uow.Commit().Returns(true);
-        _sut = new CadastrarVagaCommandHandler(_repo);
+        _sut = new CadastrarVagaCommandHandler(_repo, new SystemTenantProvider());
     }
 
     // ── Validação de comando ──────────────────────────────────────────────────
@@ -51,7 +52,7 @@ public class CadastrarVagaCommandHandlerTests
     public async Task Handle_NumeroJaExiste_RetornaErro()
     {
         _repo.GetByNumeroAsync("A1", Arg.Any<CancellationToken>())
-             .Returns(new Vaga("A1", TipoVaga.Carro));
+             .Returns(new Vaga(1L, "A1", TipoVaga.Carro));
         var command = new CadastrarVagaCommand("A1", TipoVaga.Carro);
 
         var result = await _sut.Handle(command);

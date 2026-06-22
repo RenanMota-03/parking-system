@@ -4,8 +4,9 @@ using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Parking.Domain.Entities;
 
-public class Movimentacao : TrackableEntity, IAggregateRoot
+public class Movimentacao : TrackableEntity, IAggregateRoot, ITenantEntity
 {
+    public long TenantId { get; private set; }
     public long VagaId { get; private set; }
     public string PlacaVeiculo { get; private set; } = string.Empty;
     public DateTime DataEntrada { get; private set; }
@@ -18,8 +19,9 @@ public class Movimentacao : TrackableEntity, IAggregateRoot
 
     protected Movimentacao() { }
 
-    public Movimentacao(long vagaId, string placaVeiculo)
+    public Movimentacao(long tenantId, long vagaId, string placaVeiculo)
     {
+        TenantId = tenantId;
         VagaId = vagaId;
         PlacaVeiculo = placaVeiculo.ToUpperInvariant();
         DataEntrada = DateTime.UtcNow;

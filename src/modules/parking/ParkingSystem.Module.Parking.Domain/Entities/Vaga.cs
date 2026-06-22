@@ -4,16 +4,18 @@ using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Parking.Domain.Entities;
 
-public class Vaga : TrackableEntity, IAggregateRoot
+public class Vaga : TrackableEntity, IAggregateRoot, ITenantEntity
 {
+    public long TenantId { get; private set; }
     public string Numero { get; private set; } = string.Empty;
     public TipoVaga TipoVaga { get; private set; }
     public StatusVaga Status { get; private set; }
 
     protected Vaga() { }
 
-    public Vaga(string numero, TipoVaga tipoVaga)
+    public Vaga(long tenantId, string numero, TipoVaga tipoVaga)
     {
+        TenantId = tenantId;
         Numero = numero;
         TipoVaga = tipoVaga;
         Status = StatusVaga.Disponivel;

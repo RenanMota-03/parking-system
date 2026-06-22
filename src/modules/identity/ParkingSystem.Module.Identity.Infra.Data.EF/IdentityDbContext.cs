@@ -1,18 +1,25 @@
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingSystem.Module.Identity.Domain.Entities;
 using ParkingSystem.Shared.Core.Data;
-using ParkingSystem.Shared.Core.DomainObjects;
 using ParkingSystem.Shared.Core.Messages;
+using ParkingSystem.Shared.Core.Services;
 using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Identity.Infra.Data.EF;
 
-public class IdentityDbContext(DbContextOptions<IdentityDbContext> options)
-    : DbContext(options), IUnitOfWork
+public class IdentityDbContext : DbContext, IUnitOfWork
 {
+    private readonly ITenantProvider _tenantProvider;
+
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ITenantProvider tenantProvider)
+        : base(options)
+    {
+        _tenantProvider = tenantProvider;
+    }
+
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Tenant> Tenants { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,15 +29,6 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options)
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            if (typeof(ITrackableEntity).IsAssignableFrom(entityType.ClrType))
-            {
-                var method = typeof(IdentityDbContext)
-                    .GetMethod(nameof(ApplySoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)
-                    ?.MakeGenericMethod(entityType.ClrType);
-
-                method?.Invoke(null, [modelBuilder]);
-            }
-
             foreach (var property in entityType.GetProperties())
             {
                 if (property.ClrType == typeof(DateTime))
@@ -44,16 +42,16 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options)
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
 
+        modelBuilder.Entity<Usuario>().HasQueryFilter(u =>
+            !u.IsDeleted && (_tenantProvider.IsSuperAdmin || u.TenantId == _tenantProvider.TenantId));
+
+        modelBuilder.Entity<Tenant>().HasQueryFilter(t => !t.IsDeleted);
+
         foreach (var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys()))
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
         base.OnModelCreating(modelBuilder);
-    }
-
-    private static void ApplySoftDeleteFilter<T>(ModelBuilder modelBuilder) where T : class, ITrackableEntity
-    {
-        modelBuilder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
     }
 
     public async Task<bool> Commit()

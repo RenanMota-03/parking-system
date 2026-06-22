@@ -42,7 +42,7 @@ internal class RegistrarEntradaCommandHandler(
         vaga.Ocupar();
         vagaRepository.Update(vaga);
 
-        var movimentacao = new Domain.Entities.Movimentacao(command.VagaId, command.PlacaVeiculo);
+        var movimentacao = new Domain.Entities.Movimentacao(vaga.TenantId, command.VagaId, command.PlacaVeiculo);
         await movimentacaoRepository.AddAsync(movimentacao, cancellationToken);
 
         var result = await PersistData(movimentacaoRepository.UnitOfWork);

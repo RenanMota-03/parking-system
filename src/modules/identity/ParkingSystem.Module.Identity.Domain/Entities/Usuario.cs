@@ -10,10 +10,11 @@ public class Usuario : TrackableEntity, IAggregateRoot
     public string Email { get; private set; } = string.Empty;
     public string SenhaHash { get; private set; } = string.Empty;
     public Role Role { get; private set; }
+    public long? TenantId { get; private set; }
 
     protected Usuario() { }
 
-    public Usuario(string nome, string email, string senhaHash, Role role)
+    public Usuario(string nome, string email, string senhaHash, Role role, long? tenantId = null)
     {
         DomainValidation.NotNullOrEmpty(nome, nameof(Nome));
         DomainValidation.MaxLength(nome, 100, nameof(Nome));
@@ -25,6 +26,7 @@ public class Usuario : TrackableEntity, IAggregateRoot
         Email = email.ToLowerInvariant();
         SenhaHash = senhaHash;
         Role = role;
+        TenantId = tenantId;
         SetCreatedNow();
     }
 

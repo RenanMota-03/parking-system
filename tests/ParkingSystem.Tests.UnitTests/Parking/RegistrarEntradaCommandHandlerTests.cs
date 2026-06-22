@@ -75,9 +75,9 @@ public class RegistrarEntradaCommandHandlerTests
     [Fact]
     public async Task Handle_PlacaComEntradaAberta_RetornaErro()
     {
-        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga("A1", TipoVaga.Carro));
+        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga(1L, "A1", TipoVaga.Carro));
         _movRepo.GetAbertaByPlacaAsync("ABC1234", Arg.Any<CancellationToken>())
-                .Returns(new Movimentacao(1, "ABC1234"));
+                .Returns(new Movimentacao(1L, 1L, "ABC1234"));
         var command = new RegistrarEntradaCommand(1, "ABC1234");
 
         var result = await _sut.Handle(command);
@@ -92,7 +92,7 @@ public class RegistrarEntradaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_MovimentacaoCriada()
     {
-        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga("A1", TipoVaga.Carro));
+        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga(1L, "A1", TipoVaga.Carro));
         _movRepo.GetAbertaByPlacaAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns((Movimentacao?)null);
         var command = new RegistrarEntradaCommand(1, "ABC1234");
@@ -107,7 +107,7 @@ public class RegistrarEntradaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_VagaMarcadaComoOcupada()
     {
-        var vaga = new Vaga("A1", TipoVaga.Carro);
+        var vaga = new Vaga(1L, "A1", TipoVaga.Carro);
         _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(vaga);
         _movRepo.GetAbertaByPlacaAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns((Movimentacao?)null);
@@ -122,7 +122,7 @@ public class RegistrarEntradaCommandHandlerTests
     [Fact]
     public async Task Handle_DadosValidos_RetornaIdPlacaDataEntrada()
     {
-        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga("A1", TipoVaga.Carro));
+        _vagaRepo.GetByIdAsync(1, Arg.Any<CancellationToken>()).Returns(new Vaga(1L, "A1", TipoVaga.Carro));
         _movRepo.GetAbertaByPlacaAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns((Movimentacao?)null);
         var command = new RegistrarEntradaCommand(1, "ABC1234");

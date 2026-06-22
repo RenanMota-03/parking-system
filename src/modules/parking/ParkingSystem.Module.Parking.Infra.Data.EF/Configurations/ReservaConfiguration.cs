@@ -11,6 +11,7 @@ public class ReservaConfiguration : IEntityTypeConfiguration<Reserva>
         builder.ToTable("reservas");
         builder.HasKey(r => r.Id);
         builder.Property(r => r.Id).HasColumnName("id");
+        builder.Property(r => r.TenantId).HasColumnName("tenant_id").IsRequired();
         builder.Property(r => r.VagaId).HasColumnName("vaga_id");
         builder.Property(r => r.UsuarioId).HasColumnName("usuario_id").HasMaxLength(100).IsRequired();
         builder.Property(r => r.DataAgendada).HasColumnName("data_agendada");

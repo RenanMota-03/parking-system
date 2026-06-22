@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using ParkingSystem.Shared.Core.Services;
 
 namespace ParkingSystem.Module.Parking.Infra.Data.EF;
 
@@ -18,6 +19,6 @@ public class DesignTimeParkingDbContextFactory : IDesignTimeDbContextFactory<Par
             ?? "Host=localhost;Port=5432;Database=parking_system_db;Username=parking_admin;Password=SecretPassword123!";
         optionsBuilder.UseNpgsql(connectionString);
 
-        return new ParkingDbContext(optionsBuilder.Options);
+        return new ParkingDbContext(optionsBuilder.Options, new SystemTenantProvider());
     }
 }

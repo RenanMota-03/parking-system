@@ -47,7 +47,7 @@ internal class CriarReservaCommandHandler(
         vaga.Reservar();
         vagaRepository.Update(vaga);
 
-        var reserva = new Domain.Entities.Reserva(command.VagaId, command.UsuarioId, command.DataAgendada, command.DataLimite);
+        var reserva = new Domain.Entities.Reserva(vaga.TenantId, command.VagaId, command.UsuarioId, command.DataAgendada, command.DataLimite);
         await reservaRepository.AddAsync(reserva, cancellationToken);
 
         var result = await PersistData(reservaRepository.UnitOfWork);

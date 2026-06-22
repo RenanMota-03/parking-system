@@ -1,6 +1,7 @@
 using ParkingSystem.Module.Parking.Domain.Enums;
 using ParkingSystem.Module.Parking.Domain.Interfaces;
 using ParkingSystem.Shared.Core.Messages;
+using ParkingSystem.Shared.Core.Services;
 using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Parking.Application.Vaga.Commands;
@@ -17,7 +18,7 @@ public class CadastrarVagaCommand(string numero, TipoVaga tipoVaga) : Command
     }
 }
 
-internal class CadastrarVagaCommandHandler(IVagaRepository vagaRepository)
+internal class CadastrarVagaCommandHandler(IVagaRepository vagaRepository, ITenantProvider tenantProvider)
     : CommandHandler<CadastrarVagaCommand>
 {
     public override async Task<ValidationResult> Handle(CadastrarVagaCommand command, CancellationToken cancellationToken = default)
@@ -31,7 +32,7 @@ internal class CadastrarVagaCommandHandler(IVagaRepository vagaRepository)
             return ValidationResult;
         }
 
-        var vaga = new Domain.Entities.Vaga(command.Numero, command.TipoVaga);
+        var vaga = new Domain.Entities.Vaga(tenantProvider.TenantId ?? 0L, command.Numero, command.TipoVaga);
 
         await vagaRepository.AddAsync(vaga, cancellationToken);
         var result = await PersistData(vagaRepository.UnitOfWork);

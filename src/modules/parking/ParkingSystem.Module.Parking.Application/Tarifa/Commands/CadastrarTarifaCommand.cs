@@ -1,6 +1,7 @@
 using ParkingSystem.Module.Parking.Domain.Enums;
 using ParkingSystem.Module.Parking.Domain.Interfaces;
 using ParkingSystem.Shared.Core.Messages;
+using ParkingSystem.Shared.Core.Services;
 using ParkingSystem.Shared.Core.Validation;
 
 namespace ParkingSystem.Module.Parking.Application.Tarifa.Commands;
@@ -25,7 +26,7 @@ public class CadastrarTarifaCommand(
     }
 }
 
-internal class CadastrarTarifaCommandHandler(ITarifaRepository tarifaRepository)
+internal class CadastrarTarifaCommandHandler(ITarifaRepository tarifaRepository, ITenantProvider tenantProvider)
     : CommandHandler<CadastrarTarifaCommand>
 {
     public override async Task<ValidationResult> Handle(CadastrarTarifaCommand command, CancellationToken cancellationToken = default)
@@ -33,6 +34,7 @@ internal class CadastrarTarifaCommandHandler(ITarifaRepository tarifaRepository)
         if (!command.IsValid()) return command.ValidationResult!;
 
         var tarifa = new Domain.Entities.Tarifa(
+            tenantProvider.TenantId ?? 0L,
             command.TipoVaga,
             command.ValorHora,
             command.ValorDiaria,

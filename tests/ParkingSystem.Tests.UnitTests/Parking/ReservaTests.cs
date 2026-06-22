@@ -10,7 +10,7 @@ public class ReservaTests
     private static readonly DateTime Agendada = DateTime.UtcNow.AddHours(2);
     private static readonly DateTime Limite   = DateTime.UtcNow.AddHours(4);
 
-    private static Reserva CriarReserva() => new(vagaId: 1, usuarioId: "user-01", Agendada, Limite);
+    private static Reserva CriarReserva() => new(tenantId: 1, vagaId: 1, usuarioId: "user-01", Agendada, Limite);
 
     // ── Criação ───────────────────────────────────────────────────────────────
 
@@ -27,14 +27,14 @@ public class ReservaTests
     public void Criar_UsuarioIdVazio_LancaExcecao()
     {
         Assert.Throws<EntityValidationException>(() =>
-            new Reserva(1, "", Agendada, Limite));
+            new Reserva(1, 1, "", Agendada, Limite));
     }
 
     [Fact]
     public void Criar_DataLimiteMenorQueAgendada_LancaExcecao()
     {
         Assert.Throws<EntityValidationException>(() =>
-            new Reserva(1, "user-01", Agendada, Agendada.AddMinutes(-1)));
+            new Reserva(1, 1, "user-01", Agendada, Agendada.AddMinutes(-1)));
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class ReservaTests
         var passado = DateTime.UtcNow.AddHours(-1);
 
         Assert.Throws<EntityValidationException>(() =>
-            new Reserva(1, "user-01", passado, passado.AddHours(2)));
+            new Reserva(1, 1, "user-01", passado, passado.AddHours(2)));
     }
 
     // ── Confirmar ─────────────────────────────────────────────────────────────

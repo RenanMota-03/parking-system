@@ -11,6 +11,7 @@ public class MovimentacaoConfiguration : IEntityTypeConfiguration<Movimentacao>
         builder.ToTable("movimentacoes");
         builder.HasKey(m => m.Id);
         builder.Property(m => m.Id).HasColumnName("id");
+        builder.Property(m => m.TenantId).HasColumnName("tenant_id").IsRequired();
         builder.Property(m => m.VagaId).HasColumnName("vaga_id");
         builder.Property(m => m.PlacaVeiculo).HasColumnName("placa_veiculo").HasMaxLength(8).IsRequired();
         builder.Property(m => m.DataEntrada).HasColumnName("data_entrada");
