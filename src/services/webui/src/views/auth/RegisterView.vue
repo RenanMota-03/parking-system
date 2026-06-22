@@ -50,6 +50,18 @@
             />
           </div>
 
+          <div class="field">
+            <label for="codigoConvite">Código de convite</label>
+            <InputText
+              id="codigoConvite"
+              v-model="form.codigoConvite"
+              placeholder="Código fornecido pelo administrador"
+              :disabled="loading"
+              class="w-full"
+              autocomplete="off"
+            />
+          </div>
+
           <Message v-if="errorMsg" severity="error" :closable="false">
             {{ errorMsg }}
           </Message>
@@ -88,7 +100,7 @@ import { useAuthStore } from '@/stores/authStore'
 const router = useRouter()
 const auth   = useAuthStore()
 
-const form = ref({ nome: '', email: '', senha: '' })
+const form = ref({ nome: '', email: '', senha: '', codigoConvite: '' })
 const loading    = ref(false)
 const errorMsg   = ref('')
 const successMsg = ref('')
@@ -98,7 +110,7 @@ async function handleRegistro() {
   successMsg.value = ''
   loading.value    = true
   try {
-    await auth.registrar(form.value.nome, form.value.email, form.value.senha)
+    await auth.registrar(form.value.nome, form.value.email, form.value.senha, form.value.codigoConvite)
     successMsg.value = 'Conta criada com sucesso! Redirecionando...'
     setTimeout(() => router.push('/login'), 1500)
   } catch (err: any) {

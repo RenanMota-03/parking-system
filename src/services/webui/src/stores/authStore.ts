@@ -42,8 +42,8 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('auth_user', JSON.stringify(user.value))
   }
 
-  async function registrar(nome: string, email: string, senha: string) {
-    await authService.registrar({ nome, email, senha })
+  async function registrar(nome: string, email: string, senha: string, codigoConvite: string) {
+    await authService.registrar({ nome, email, senha, codigoConvite })
   }
 
   function logout() {

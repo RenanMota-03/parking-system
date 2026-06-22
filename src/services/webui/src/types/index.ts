@@ -1,9 +1,10 @@
 // ─── Enums ───────────────────────────────────────────────────────────────────
 
 export enum Role {
-  Admin    = 0,
-  Operador = 1,
-  Cliente  = 2,
+  Admin      = 0,
+  Operador   = 1,
+  Cliente    = 2,
+  SuperAdmin = 3,
 }
 
 export enum TipoVaga {
@@ -42,9 +43,10 @@ export interface LoginRequest {
 }
 
 export interface RegistroRequest {
-  nome: string
-  email: string
-  senha: string
+  nome:          string
+  email:         string
+  senha:         string
+  codigoConvite: string
 }
 
 export interface AuthResponse {
@@ -200,9 +202,10 @@ export const FORMA_PAGAMENTO_LABEL: Record<FormaPagamento, string> = {
 }
 
 export const ROLE_LABEL: Record<Role, string> = {
-  [Role.Admin]:    'Admin',
-  [Role.Operador]: 'Operador',
-  [Role.Cliente]:  'Cliente',
+  [Role.Admin]:      'Admin',
+  [Role.Operador]:   'Operador',
+  [Role.Cliente]:    'Cliente',
+  [Role.SuperAdmin]: 'Super Admin',
 }
 
 // ─── Relatórios ──────────────────────────────────────────────────────────────
