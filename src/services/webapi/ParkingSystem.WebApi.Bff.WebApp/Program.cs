@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 using ParkingSystem.Module.Identity.Infra.Data.EF;
 using ParkingSystem.Module.Parking.Infra.Data.EF;
 using ParkingSystem.Shared.IoC;
@@ -19,14 +20,26 @@ if (string.IsNullOrWhiteSpace(connectionString))
         "ConnectionStrings:DefaultConnection não configurada. " +
         "Em produção, defina a variável de ambiente ConnectionStrings__DefaultConnection.");
 
-builder.Services.AddDbContext<IdentityDbContext>(options => options.UseNpgsql(connectionString));
-builder.Services.AddDbContext<ParkingDbContext>(options => options.UseNpgsql(connectionString));
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+
+var sniHost = builder.Configuration["Database:SniHost"];
+if (!string.IsNullOrWhiteSpace(sniHost))
+    dataSourceBuilder.UseSslClientAuthenticationOptionsCallback(ssl => ssl.TargetHost = sniHost);
+
+var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddDbContext<IdentityDbContext>(options => options.UseNpgsql(dataSource));
+builder.Services.AddDbContext<ParkingDbContext>(options => options.UseNpgsql(dataSource));
+
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:5173"];
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("WebAppPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
